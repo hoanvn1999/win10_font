@@ -1,0 +1,76 @@
+gsettings set org.gnome.desktop.peripherals.touchpad natural-scroll true
+#SSL:
+sudo apt install apt-transport-https ca-certificates -y
+
+#Uninstall libreoffice
+sudo apt remove --purge libreoffice* -y
+sudo apt autoremove
+sudo apt clean
+
+#Wine:
+sudo dpkg --add-architecture i386
+wget -nc https://dl.winehq.org/wine-builds/winehq.key
+sudo apt-key add winehq.key
+sudo add-apt-repository 'deb https://dl.winehq.org/wine-builds/ubuntu/ xenial main'
+sudo apt update
+sudo apt install --install-recommends winehq-stable -y
+
+#MacBuntu OS Y Theme, Icons and cursors:
+sudo add-apt-repository ppa:noobslab/macbuntu
+sudo apt update
+sudo apt install macbuntu-os-icons-lts-v7
+sudo apt install macbuntu-os-ithemes-lts-v7 -y
+
+#Unikey
+sudo apt install ibus-unikey -y
+
+#Git:
+sudo apt install git -y
+sudo nano ~/.bashrc
+git_branch() {
+ git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
+}
+export PS1="\[\033[1;36m\]\u\[\033[1;31m\]@\[\033[1;32m\]\h:\[\033[1;35m\]\w\[\033[1;34m\]\$(git_branch)\[\033[1;36m\]\$\[\033[0m\] "
+
+
+#Pinta:
+sudo apt install pinta -y
+
+#MariaDB
+sudo apt -y install software-properties-common gnupg-curl
+sudo apt-key adv --fetch-keys 'https://mariadb.org/mariadb_release_signing_key.asc'
+sudo add-apt-repository 'deb [arch=amd64,arm64,i386,ppc64el] http://mariadb.mirror.liquidtelecom.com/repo/10.5/ubuntu xenial main'
+sudo apt update
+sudo apt install mariadb-server mariadb-client -y
+sudo mysql_secure_installation
+mysql -u root -p
+use mysql;
+CREATE USER 'admin'@'localhost' IDENTIFIED BY ',./';
+GRANT ALL PRIVILEGES ON * . * TO 'admin'@'localhost';
+flush privileges; 
+quit;
+
+#Apache
+sudo apt-get install apache2 -y
+sudo apt-get install ufw -y
+sudo ufw allow http
+sudo ufw allow https
+
+#PHP
+sudo apt-get install php libapache2-mod-php php-mcrypt php-mysql php-cgi php-curl php-json -y
+
+#Ruby
+sudo gpg2 --keyserver hkp://pool.sks-keyservers.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
+sudo -s
+apt-get install curl
+cd /tmp && \curl -sSL https://get.rvm.io -o rvm.sh
+cat /tmp/rvm.sh | bash -s stable
+source /usr/local/rvm/scripts/rvm
+rvm list known
+rvm install 2.7.0
+gem install rails
+
+#FreeOffice
+#VS code
+#Teamviewer
+
